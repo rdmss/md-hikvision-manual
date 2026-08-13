@@ -25,7 +25,7 @@ theme:
         icon: material/weather-sunny
         name: Modo claro
   features:
-    - navigation.sections
+    - navigation.expand
     - navigation.top
     - navigation.tracking
     - content.tabs.link
@@ -54,49 +54,7 @@ plugins:
 
 nav:
   - Início: index.md
-  - Visão geral:
-      - O que o driver faz: visao-geral/produto.md
-      - Topologia: visao-geral/topologia.md
-      - Glossário: visao-geral/glossario.md
-  - Antes de instalar:
-      - Pré-requisitos: antes-de-instalar/pre-requisitos.md
-      - Rede e portas: antes-de-instalar/rede-e-portas.md
-      - Permissões na Senior: antes-de-instalar/permissoes-senior.md
-      - Checklist: antes-de-instalar/checklist.md
-  - Instalação:
-      - Download: instalacao/download.md
-      - Instalador passo a passo: instalacao/instalador.md
-      - Serviço Windows: instalacao/servico-windows.md
-      - Primeira configuração: instalacao/primeira-configuracao.md
-      - Atualização: instalacao/atualizacao.md
-      - Desinstalação: instalacao/desinstalacao.md
-  - Configuração — Senior X:
-      - Parâmetros: senior-x/parametros.md
-      - Cadastro na plataforma: senior-x/cadastro.md
-      - Fotos e facial: senior-x/fotos-e-facial.md
-      - Dispositivos e leitoras: senior-x/dispositivos.md
-      - Validação: senior-x/validacao.md
-  - Configuração — Senior XT:
-      - Parâmetros: senior-xt/parametros.md
-      - Senior Config Center: senior-xt/config-center.md
-      - Cadastro de catálogo: senior-xt/catalogo.md
-      - Tecnologia biométrica: senior-xt/biometria.md
-      - Dispositivos e leitoras: senior-xt/dispositivos.md
-      - Certificado: senior-xt/certificado.md
-      - Validação: senior-xt/validacao.md
-  - Operação:
-      - Tela de diagnóstico: operacao/diagnostico.md
-      - Health check e monitoramento: operacao/health-e-monitoramento.md
-      - Logs: operacao/logs.md
-      - Queda da Senior: operacao/queda-da-senior.md
-      - Fila de reenvio e dead-letter: operacao/dead-letter.md
-  - Solução de problemas:
-      - Fluxograma: problemas/fluxograma.md
-      - Sintoma, causa e ação: problemas/sintomas.md
-      - Mensagens de log: problemas/mensagens-de-log.md
-      - Perguntas frequentes: problemas/faq.md
-  - Referência:
-      - Parâmetros: referencia/parametros.md
-  - Anexos:
-      - Notas de versão: anexos/notas-de-versao.md
-      - LGPD e dados biométricos: anexos/lgpd.md
+  - Guia Senior X: guia-senior-x.md
+  - Guia Senior XT: guia-senior-xt.md
+  - Propriedades: propriedades.md
+  - Problemas: problemas.md

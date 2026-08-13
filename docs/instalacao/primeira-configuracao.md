@@ -9,11 +9,12 @@ http://<host>:5000/config
 
 O endereço `/` leva à mesma tela.
 
-!!! warning "Por padrão, a tela não pede login"
-    Com `middleware.api.password` vazio, qualquer pessoa com acesso de rede à
-    porta abre esta tela — que exibe e permite alterar os parâmetros de
-    integração. **Defina uma senha nesta primeira configuração** e restrinja a
-    allowlist aos IPs de gestão.
+![Tela de configuração do driver](../assets/telas/config.jpg){ loading=lazy }
+
+!!! tip "Defina a senha do painel agora"
+    O painel passa a exigir login assim que `middleware.api.password` é
+    preenchida. Aproveite esta primeira configuração para defini-la e para
+    restringir `middleware.api.allowlist` aos IPs de gestão.
 
 ## A tela
 
@@ -62,8 +63,11 @@ Preencha as propriedades obrigatorias: <lista das chaves>
 
 Nada é gravado quando isso acontece — corrija e salve de novo.
 
-Gravando com sucesso, aparece a confirmação **Driver Configurado**. O driver se
-reinicia sozinho para aplicar; não é preciso mexer no serviço.
+Gravando com sucesso, aparece a confirmação **Driver Configurado**:
+
+![Confirmação de driver configurado](../assets/telas/config-salvo.jpg){ loading=lazy }
+
+O driver se reinicia sozinho para aplicar; não é preciso mexer no serviço.
 
 ## Confirmando que funcionou
 

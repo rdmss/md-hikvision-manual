@@ -1,20 +1,17 @@
 # Desinstalação
 
-!!! danger "A desinstalação apaga o diretório inteiro"
-    O último passo do desinstalador executa `rmdir /S /Q` sobre a pasta de
-    instalação. Isso remove **tudo** que estiver lá dentro, inclusive:
+A desinstalação remove a aplicação **e o diretório de instalação**, com tudo o
+que estiver nele:
 
-    - `middleware.properties` — sua configuração, com a chave de integração
-    - `HIK.CER` — o certificado, em deploys Senior XT
-    - a pasta `log\` — todo o histórico de log
-    - o banco de eventos e a fila `events\`, incluindo `events\deadletter\`
+- `middleware.properties` — a configuração, com a chave de integração
+- `HIK.CER` — o certificado, em deploys Senior XT
+- a pasta `log\` — o histórico de log
+- o banco de eventos e a fila `events\`, incluindo `events\deadletter\`
 
-    O `middleware.properties` é marcado para não ser removido pelo
-    desinstalador, mas a remoção da pasta acontece depois e leva o arquivo junto.
-    **Na prática, não há preservação.**
-
-    **Faça backup antes de desinstalar** se houver qualquer chance de reinstalar
-    nesta máquina ou de precisar dos eventos ainda não entregues.
+!!! warning "Faça backup antes"
+    Se houver qualquer chance de reinstalar nesta máquina, ou se ainda existirem
+    eventos não entregues à Senior, copie esses arquivos antes de iniciar. O
+    procedimento está logo abaixo.
 
 ## Backup recomendado
 
@@ -48,7 +45,7 @@ instalação. O processo executa, nesta ordem:
 2. Aguarda 5 segundos
 3. Encerra o processo à força — `taskkill /F /IM HIK_Driver.exe /T`
 4. Remove o serviço — `sc delete <nome do serviço>`
-5. **Apaga a pasta de instalação inteira** — `rmdir /S /Q`
+5. Remove a pasta de instalação
 
 !!! note "Se você trocou o nome do serviço na instalação"
     O desinstalador usa o nome informado naquela ocasião. Se ele não for

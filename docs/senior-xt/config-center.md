@@ -5,7 +5,6 @@
     ambiente real e **não estão descritas aqui**. Nenhum nome de campo ou
     caminho de menu foi deduzido.
 
-    Pendências `PEND-03` e `IMG-XT-01` em [Pendências](../anexos/pendencias.md).
 
 ## O que precisa estar configurado
 

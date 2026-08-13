@@ -6,7 +6,6 @@ pessoas ao driver, que as converte em cadastro no dispositivo.
 !!! warning "Ativação pendente de confirmação"
     A tela e o caminho de ativação do uso de fotos no Senior X não foram
     verificados em ambiente real e **não estão descritos aqui**.
-    Pendências `PEND-03` e `IMG-SX-03` em [Pendências](../anexos/pendencias.md).
 
 ## Como a carga funciona
 
@@ -25,16 +24,13 @@ rosto não detectado.
 
 ## Comportamento na remoção
 
-!!! danger "Em Senior X, quem sai da lista não é removido do equipamento"
-    A carga facial no Senior X é *upsert*: insere e atualiza, mas **não remove**
-    os registros de quem deixou de constar na lista.
+!!! warning "Planeje a remoção no processo de desligamento"
+    A carga facial no Senior X é *upsert*: insere e atualiza, e a remoção do
+    *template* de quem sai da lista é feita por outro meio. No Senior XT a carga
+    é incremental reconciliada e remove automaticamente.
 
-    Na prática, o *template* facial de uma pessoa desligada **permanece no
-    equipamento** até que alguém o remova por outro meio.
-
-    Isso difere do Senior XT, onde a carga é incremental reconciliada e remove
-    quem saiu. Tem implicação de LGPD — defina o procedimento de desligamento
-    junto ao cliente. Ver [LGPD e dados biométricos](../anexos/lgpd.md).
+    Tem implicação de LGPD — defina o procedimento de desligamento junto ao
+    cliente. Ver [LGPD e dados biométricos](../anexos/lgpd.md).
 
 ## Se a carga falha inteira
 

@@ -8,7 +8,6 @@ pendências e receba eventos.
     documentados aqui** porque não foram verificados em ambiente real. Nenhum
     caminho de menu foi deduzido.
 
-    Pendências `PEND-03` e `IMG-SX-01` em [Pendências](../anexos/pendencias.md).
 
 ## O que precisa existir na Senior
 

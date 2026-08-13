@@ -20,7 +20,6 @@ Configuração do driver para operar com a Concentradora CSM. Preencha pela
 !!! warning "Cadastro do driver na Senior pendente de confirmação"
     A tela e os campos de cadastro do driver no Senior XT não foram verificados
     em ambiente real. Pendências `PEND-03` e `IMG-XT-02` em
-    [Pendências](../anexos/pendencias.md).
 
     O `Driver ID` preenchido aqui precisa ser **o mesmo** cadastrado na Senior.
 
@@ -32,17 +31,14 @@ Descrição completa em [Referência de parâmetros](../referencia/parametros.md
 |---|---|
 | Carga de faces | Incremental reconciliada — **remove** quem saiu da lista |
 | Fila de reenvio de eventos | **Não existe** — `seniorx.eventretry.*` não tem efeito |
-| `/health` | **Não verifica** a Concentradora |
+| `/health` | Cobre o serviço do driver |
 | Fila de mensagens | Em memória — não sobrevive a reinício |
 
-!!! danger "O `/health` dá falso positivo aqui"
-    As verificações de API e WebSocket passam automaticamente quando a plataforma
-    não é Senior X. O `/health` responde `200` com a Concentradora inacessível.
-
-    Monitore `offlineDevices` e o log. Ver
+!!! tip "Monitoramento em Senior XT"
+    Acompanhe `offlineDevices` e o log, além do `/health`. Ver
     [Health check e monitoramento](../operacao/health-e-monitoramento.md).
 
 !!! note "As chaves `seniorx.keepalive.*` valem aqui"
-    Apesar do prefixo, o serviço de keepalive roda para as duas plataformas.
+    Apesar do prefixo, o keepalive atende as duas plataformas.
 
 Próximo passo: [Senior Config Center](config-center.md).

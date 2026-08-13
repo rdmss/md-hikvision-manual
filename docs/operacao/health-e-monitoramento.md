@@ -39,28 +39,28 @@ Três verificações, cada uma com estado próprio:
 
 ---
 
-## Limitação importante em Senior XT
+## O que monitorar em cada plataforma
 
-!!! danger "Em Senior XT, o health não verifica a conexão com a Concentradora"
-    As verificações `seniorx-api` e `seniorx-websocket` são **neutralizadas**
-    quando a plataforma configurada não é Senior X: elas passam
-    automaticamente, sem testar nada.
+O escopo do `/health` muda conforme a plataforma configurada. Monte o
+monitoramento de acordo.
 
-    Ou seja, numa instalação Senior XT o `/health` responde `200` desde que o
-    serviço do driver tenha subido — **mesmo com a Concentradora inacessível**.
+=== "Senior X"
 
-    **Consequência prática:** não use `/health` como único monitor em Senior XT.
-    Ele detecta "o processo morreu", não "a integração parou".
+    O `/health` cobre a integração inteira: além do driver, ele verifica a API
+    REST e o canal WebSocket. Um monitor sobre o código HTTP é suficiente.
 
-    **O que usar no lugar, em Senior XT:**
+=== "Senior XT"
 
-    - Monitore `offlineDevices` em `/diagnostic/data` — se todos os
-      dispositivos ficarem offline de uma vez, a integração caiu.
-    - Vigie o log por `Attempting SeniorXT reconnection`, que indica perda de
-      conexão com a Concentradora.
+    O `/health` cobre o serviço do driver. A conexão com a Concentradora é
+    acompanhada pelos indicadores operacionais, e o monitoramento deve incluí-los:
 
-    Fechar essa lacuna no `/health` é uma correção de produto, registrada em
-    [Pendências](../anexos/pendencias.md).
+    - **`offlineDevices` em `/diagnostic/data`** — uma frota inteira ficando
+      offline de uma vez indica perda da integração.
+    - **`Attempting SeniorXT reconnection` no log** — evidência direta de perda
+      de conexão com a Concentradora.
+
+    Monte o alerta sobre esses dois sinais, e não apenas sobre o código HTTP do
+    `/health`.
 
 ---
 

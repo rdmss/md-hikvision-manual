@@ -6,7 +6,6 @@ este driver.
 !!! warning "Telas de cadastro pendentes de confirmação"
     A sequência exata de telas do Senior X não foi verificada em ambiente real e
     não está descrita aqui. Pendências `PEND-03` e `IMG-SX-02` em
-    [Pendências](../anexos/pendencias.md).
 
 ## O que o driver faz com o dispositivo
 

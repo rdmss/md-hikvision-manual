@@ -4,9 +4,8 @@ Quando o driver não consegue entregar um evento à Senior, ele guarda em vez de
 descartar. Este capítulo explica as duas pastas envolvidas e o que fazer quando
 a segunda começa a encher.
 
-!!! info "Somente Senior X"
-    O serviço de reenvio é registrado apenas quando `thirdpart=seniorx`. Em
-    instalações Senior XT esta mecânica e seus parâmetros não se aplicam.
+!!! info "Específico do Senior X"
+    Esta mecânica e seus parâmetros se aplicam a instalações `thirdpart=seniorx`.
 
 ## As duas pastas
 

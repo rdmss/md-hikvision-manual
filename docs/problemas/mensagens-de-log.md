@@ -37,7 +37,7 @@ valores reais no log.
 
 | Mensagem | Sev. | Significado | Ação |
 |---|---|---|---|
-| `Attempting SeniorXT reconnection. Attempt {Attempt}.` | Aviso | Conexão com a Concentradora caiu; o driver está reconectando. | Se repetir sem parar, verifique `seniorxt.server`, `seniorxt.port` e a rede. **Em Senior XT esta é a principal evidência de queda** — o `/health` não a detecta. |
+| `Attempting SeniorXT reconnection. Attempt {Attempt}.` | Aviso | Conexão com a Concentradora caiu; o driver está reconectando. | Se repetir sem parar, verifique `seniorxt.server`, `seniorxt.port` e a rede. Em Senior XT esta é a principal evidência de queda da integração. |
 | `Enviando autenticacao SeniorXT. Driver={DriverId}, MessageNumber={MessageNumber}` | Info | Handshake em curso. | — |
 | `Erro ao enviar mensagem {MessageType} #{MessageNumber}.` | Erro | Falha ao transmitir para a Concentradora. | Verifique a conexão. |
 | `Erro ao enviar ACK para a mensagem #{MessageNumber}.` / `NACK` | Erro | Falha ao confirmar recebimento. | Idem. |
@@ -51,7 +51,7 @@ valores reais no log.
 | Mensagem | Sev. | Significado | Ação |
 |---|---|---|---|
 | `Erro no keepalive do device {DeviceId}` | Erro | O dispositivo não respondeu à sondagem. | Confirme que o equipamento está ligado e alcançável na porta ISAPI. |
-| `DevicesKeepAlive \| Error` | Erro | Falha no ciclo de sondagem como um todo, não em um dispositivo. | Investigue rede ou saturação. Ver [Escala e tuning](../referencia/escala-e-tuning.md). |
+| `DevicesKeepAlive \| Error` | Erro | Falha no ciclo de sondagem como um todo, não em um dispositivo. | Investigue rede ou saturação. Ver [Referência de parâmetros](../referencia/parametros.md). |
 | `Erro no resync do device {DeviceId}` | Erro | A reconciliação periódica falhou para esse dispositivo. | Idem. |
 | `Erro ao enviar status do device {DeviceId}` | Erro | O driver não conseguiu reportar online/offline à Senior. | Verifique a conexão com a plataforma. |
 | `ConfigureDevices failed for device {DeviceId}` | Erro | Falha ao provisionar o equipamento. | Confirme credenciais do equipamento e se o ISAPI está habilitado. |
@@ -64,7 +64,7 @@ valores reais no log.
 | Mensagem | Sev. | Significado | Ação |
 |---|---|---|---|
 | `Device {ManagerDeviceId} not found for pendency {PendencyId}` | Erro | A Senior mandou trabalho para um dispositivo que o driver não conhece. | O equipamento provavelmente não está cadastrado ou associado corretamente na Senior. |
-| `<Tipo> \| Pendency: {PendencyId} - Device: {ManagerDeviceId} - Not implemented` | Erro | A Senior enviou um **tipo de pendência que o driver não trata**. | Não é falha de configuração nem de rede: é funcionalidade ausente. Anote o `<Tipo>` e acione o suporte. |
+| `<Tipo> \| Pendency: {PendencyId} - Device: {ManagerDeviceId} - Not implemented` | Erro | O tipo de pendência recebido não é tratado nesta versão. | Anote o `<Tipo>` e o `PendencyId` e acione o suporte. |
 | `Erro processando pendência {PendencyId} do device {DeviceId}` | Erro | Falha genérica no processamento. | Leia a exceção que acompanha. |
 | `Carga facial \| Device {ManagerDeviceId} Pendency {PendencyId} \| [{Index}/{Total}] ERRO {Person} — {Motivo}` | Erro | Uma pessoa específica falhou na carga facial; as demais seguem. | `{Motivo}` diz o porquê — foto ausente, formato recusado pelo equipamento, rosto não detectado. |
 | `CollectEventsByDate \| Device {ManagerDeviceId} - Error {PendencyId}` | Erro | Falha ao coletar eventos por período. | Verifique se o equipamento responde. |

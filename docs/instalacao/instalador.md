@@ -14,8 +14,8 @@ O instalador é gerado com Inno Setup. O arquivo se chama
 
 - Execute como **administrador**. O instalador declara privilégio obrigatório e
   não abre sem elevação.
-- Tenha o **ASP.NET Core Runtime 9.0 x64** instalado — o instalador barra sem
-  ele, ainda que o driver não precise. Ver [Pré-requisitos](../antes-de-instalar/pre-requisitos.md).
+- Tenha o **ASP.NET Core Runtime 9.0 x64** instalado. Ver
+  [Pré-requisitos](../antes-de-instalar/pre-requisitos.md).
 - Em **atualização**, sua configuração é preservada. Ver [Atualização](atualizacao.md).
 
 ---
@@ -77,21 +77,14 @@ relativos à pasta que você escolheu.
 
 ## Tela 4 — Pronto para instalar
 
-É aqui que o instalador **verifica o ASP.NET Core Runtime 9.0**.
+O instalador confere o **ASP.NET Core Runtime 9.0** antes de copiar os arquivos.
 
-**Se o runtime for encontrado**, a instalação prossegue normalmente.
+Com o runtime presente, a instalação prossegue normalmente.
 
-**Se não for encontrado**, aparece um diálogo de erro com os botões
-**Repetir** e **Cancelar**:
-
-> O ASP.NET Core Runtime 9.0 não está instalado.
-> Este aplicativo requer o ASP.NET Core Runtime 9.0 para funcionar.
-> Baixe e instale em: https://dotnet.microsoft.com/download/dotnet/9.0
-> (Selecione "ASP.NET Core Runtime" para Windows x64)
-> Após instalar, clique em "Repetir" para continuar ou "Cancelar" para abortar.
-
-O diálogo **reaparece em laço** até o runtime ser detectado. Instale-o em outra
-janela, volte e clique em **Repetir**. **Cancelar** aborta a instalação.
+Se ele não for encontrado, o assistente informa o endereço para download
+(`https://dotnet.microsoft.com/download/dotnet/9.0`, opção *ASP.NET Core
+Runtime* para Windows x64) e oferece **Repetir** e **Cancelar**. Instale o
+runtime em outra janela e clique em **Repetir** para seguir do mesmo ponto.
 
 ---
 

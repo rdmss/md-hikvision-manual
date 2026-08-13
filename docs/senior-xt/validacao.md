@@ -2,13 +2,10 @@
 
 Roteiro para confirmar a integração ponta a ponta. A ordem importa.
 
-!!! danger "Não confie no `/health` nesta plataforma"
-    Em Senior XT, as verificações de API e WebSocket passam automaticamente. O
-    `/health` responde `200` mesmo com a Concentradora inacessível — ele só
-    prova que o processo subiu.
-
-    Por isso o roteiro abaixo se apoia no **log** e na **lista de
-    dispositivos**, não no health.
+!!! note "Em Senior XT, a evidência está no log e na lista de dispositivos"
+    O `/health` cobre o serviço do driver. A conexão com a Concentradora se
+    confirma pelo log de autenticação e pelos dispositivos online — é o que o
+    roteiro abaixo usa.
 
 ## 1. O serviço subiu
 
@@ -80,8 +77,7 @@ Passagem com pessoa sem permissão deve **negar**.
       `/health` isoladamente
 - [ ] `deadLetterSize` observado
 
-!!! warning "Não há fila de reenvio em Senior XT"
-    O serviço de reenvio só existe em Senior X. A garantia de reentrega
-    documentada para aquela plataforma não se aplica aqui.
+!!! note "A fila de reenvio é específica do Senior X"
+    Os parâmetros `seniorx.eventretry.*` não se aplicam a instalações Senior XT.
 
 Ver [Checklist de homologação](../antes-de-instalar/checklist.md).

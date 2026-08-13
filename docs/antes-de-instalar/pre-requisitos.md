@@ -14,24 +14,16 @@ falha em campo falha por um destes cinco pontos.
 
 ## Runtime .NET
 
-!!! warning "O instalador exige o ASP.NET Core Runtime 9.0, mesmo sem o driver precisar dele"
-    O driver é publicado como **self-contained** `win-x64` — o runtime vai
-    embutido no executável e a aplicação roda sem .NET instalado na máquina.
+**Instale o ASP.NET Core Runtime 9.0 x64 antes de rodar o instalador.**
 
-    O instalador, porém, verifica o runtime na última tela e **não deixa
-    continuar** sem ele. Se não encontrar, exibe um diálogo em laço:
+O instalador confere o runtime antes de prosseguir. Se ele não estiver presente,
+a instalação não avança e o assistente orienta o download em
+`https://dotnet.microsoft.com/download/dotnet/9.0` (opção *ASP.NET Core Runtime*,
+Windows x64). Instalado o runtime, basta continuar dali mesmo.
 
-    > O ASP.NET Core Runtime 9.0 não está instalado.
-    > Este aplicativo requer o ASP.NET Core Runtime 9.0 para funcionar.
-    > Baixe e instale em: https://dotnet.microsoft.com/download/dotnet/9.0
-    > (Selecione "ASP.NET Core Runtime" para Windows x64)
-
-    Só há duas saídas: instalar o runtime e clicar em **Repetir**, ou
-    **Cancelar** e abortar a instalação.
-
-    **Na prática, portanto: instale o ASP.NET Core Runtime 9.0 x64 antes**, ainda
-    que o driver não vá utilizá-lo. Essa verificação é uma trava do instalador,
-    não uma dependência da aplicação.
+!!! tip "Deixe pronto antes de ir ao cliente"
+    Em servidor recém-provisionado o runtime raramente está instalado. Baixar no
+    momento da visita costuma custar mais tempo do que a instalação inteira.
 
 ## Rede
 
@@ -62,4 +54,4 @@ alcançar o driver**, não só o contrário. Ver [Rede e portas](rede-e-portas.m
   equipamentos, e um IP que muda quebra a entrega de eventos.
 
 !!! info "Modelos e firmware homologados"
-    A lista fechada ainda não foi consolidada. Ver [Pendências](../anexos/pendencias.md).
+    Consulte o fornecedor para a lista de modelos homologados.

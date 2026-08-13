@@ -86,12 +86,7 @@ reprocessado no próximo start.
 
 === "Senior XT"
 
-    !!! danger "O `/health` não detecta"
-        Em Senior XT as verificações de API e WebSocket passam automaticamente,
-        sem testar nada. O `/health` responde `200` mesmo com a Concentradora
-        inacessível.
-
-    Use no lugar:
+    Acompanhe pelos indicadores operacionais:
 
     - O log, procurando por `Attempting SeniorXT reconnection`
     - `offlineDevices` em `/diagnostic/data` — uma queda em massa é sinal forte

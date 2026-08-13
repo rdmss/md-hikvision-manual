@@ -4,7 +4,6 @@
     A sequência de telas do Senior XT para cadastro de controladora, leitora
     facial e leitoras de cartão não foi verificada em ambiente real e não está
     descrita aqui. Pendências `PEND-03` e `IMG-XT-05` em
-    [Pendências](../anexos/pendencias.md).
 
 ## O que o driver faz com o dispositivo
 

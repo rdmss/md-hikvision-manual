@@ -3,7 +3,6 @@
 !!! warning "Capítulo pendente de confirmação"
     O cadastro de tecnologia biométrica no Senior XT não foi verificado em
     ambiente real e não está descrito aqui.
-    Pendências `PEND-03` e `IMG-XT-04` em [Pendências](../anexos/pendencias.md).
 
 ## Para que serve
 

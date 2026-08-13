@@ -8,7 +8,6 @@ Hikvision Driver-Setup-2.2.1.exe
 
 !!! info "Onde obter"
     O canal oficial de distribuição ainda não está definido nesta documentação —
-    é o item `PEND-01` em [Pendências](../anexos/pendencias.md). Solicite o
     instalador pelo canal de atendimento acordado com o fornecedor.
 
     Nenhum link foi publicado aqui porque nenhum foi confirmado. Um endereço

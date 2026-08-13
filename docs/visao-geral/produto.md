@@ -40,9 +40,9 @@ O driver sincroniza nos equipamentos quem pode passar.
 | **Faces — Senior XT** | Incremental reconciliada | Envia só o que mudou e **remove quem saiu** da lista |
 | **Faces — Senior X** | *Upsert* | Adiciona e atualiza, mas **não remove** quem saiu |
 
-!!! warning "A diferença na remoção facial importa"
-    Em Senior X, o *template* facial de uma pessoa desligada permanece no
-    equipamento até ser removido por outro meio. Isso tem implicação de LGPD —
+!!! note "A diferença na remoção facial importa no desligamento"
+    Em Senior X, a remoção do *template* facial de quem sai da lista precisa ser
+    feita por outro meio. Considere isso ao definir o processo de desligamento —
     ver [LGPD e dados biométricos](../anexos/lgpd.md).
 
 A carga facial é o processamento mais pesado do driver: envolve baixar a foto e
@@ -59,8 +59,7 @@ O driver sonda periodicamente cada equipamento e reporta online/offline à Senio
 - Equipamento já offline usa sonda rápida, para não travar o ciclo
 - **Resync reconciliador** periódico, corrigindo divergências acumuladas
 
-Os parâmetros estão em [Referência](../referencia/parametros.md); o
-dimensionamento para frotas grandes, em [Escala e tuning](../referencia/escala-e-tuning.md).
+Os parâmetros estão em [Referência de parâmetros](../referencia/parametros.md).
 
 ## 4. Durabilidade
 
@@ -80,8 +79,8 @@ Nenhum evento de acesso é descartado em silêncio. Três camadas:
 Vale ser explícito, porque estas são perguntas recorrentes:
 
 - **Não libera acesso offline.** Ver acima.
-- **Não emite alerta.** Não há e-mail nem push quando algo cai — o monitoramento
-  precisa consultar `/health`. Ver
+- **Não emite alerta ativo.** O monitoramento do cliente consulta o driver; não
+  há envio de e-mail ou push. Ver
   [Health check e monitoramento](../operacao/health-e-monitoramento.md).
 - **Não é o cadastro de pessoas.** Esse vive na Senior.
 - **Não roda em múltiplas instâncias particionando a frota.** Uma instalação

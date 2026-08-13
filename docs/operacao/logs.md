@@ -58,10 +58,9 @@ O nível e os destinos ficam em `logging.json`, no diretório de instalação.
     Se você personalizar o `logging.json`, guarde uma cópia: o instalador o
     substitui.
 
-!!! danger "Cuidado ao elevar o nível para Debug"
-    Log em nível Debug foi a causa de lentidão corrigida na 2.2.1. Use
-    temporariamente, para diagnosticar, e volte ao normal em seguida — não
-    deixe ligado em produção.
+!!! warning "Use o nível Debug apenas para diagnosticar"
+    Log em Debug aumenta bastante o volume gravado. Ative durante a
+    investigação e volte ao nível normal em seguida.
 
 ## Segredos
 
@@ -80,6 +79,6 @@ Os arquivos se acumulam por dia no diretório `log\`. Não há expurgo automáti
 documentado — inclua a pasta na rotina de limpeza do servidor, considerando o
 prazo de retenção definido pelo cliente.
 
-!!! danger "A desinstalação apaga todo o histórico"
-    A pasta `log\` vai junto com o diretório de instalação. Se o histórico
-    importar, faça backup antes. Ver [Desinstalação](../instalacao/desinstalacao.md).
+!!! warning "Guarde o histórico antes de desinstalar"
+    A pasta `log\` é removida junto com o diretório de instalação. Ver
+    [Desinstalação](../instalacao/desinstalacao.md).

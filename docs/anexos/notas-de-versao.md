@@ -44,4 +44,3 @@ cobertas por este manual.
 
 !!! info "Changelog completo pendente"
     A relação detalhada de versões anteriores não foi consolidada aqui.
-    Registrado em [Pendências](pendencias.md).

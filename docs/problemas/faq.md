@@ -35,13 +35,11 @@ A entrega de eventos usa o sentido **equipamento → driver**, na porta do drive
 
 ---
 
-### O driver precisa de .NET instalado na máquina?
+### Preciso instalar o .NET na máquina?
 
-A aplicação, não — ela é publicada *self-contained*.
-
-O **instalador**, sim: ele verifica o ASP.NET Core Runtime 9.0 e não deixa
-continuar sem ele. Na prática, instale o runtime antes, ainda que o driver não
-vá utilizá-lo. Ver [Pré-requisitos](../antes-de-instalar/pre-requisitos.md).
+Sim: o instalador requer o **ASP.NET Core Runtime 9.0 x64** e confere sua
+presença antes de prosseguir. Deixe-o instalado antes de começar. Ver
+[Pré-requisitos](../antes-de-instalar/pre-requisitos.md).
 
 ---
 
@@ -54,33 +52,29 @@ configuração é preservada. Ver [Atualização](../instalacao/atualizacao.md).
 
 ### Desinstalar apaga minha configuração?
 
-**Sim.** O desinstalador remove o diretório inteiro, levando junto configuração,
-certificado, logs e eventos não entregues. Faça backup antes. Ver
-[Desinstalação](../instalacao/desinstalacao.md).
+Sim — a desinstalação remove o diretório de instalação, com configuração,
+certificado, logs e eventos ainda não entregues. Faça backup antes; o
+procedimento está em [Desinstalação](../instalacao/desinstalacao.md).
 
 ---
 
-### O `/health` responde 200 em Senior XT, mas a integração está caída. Por quê?
+### Como monitoro a integração em Senior XT?
 
-Porque em Senior XT as verificações de API e WebSocket **passam
-automaticamente** — elas dizem respeito ao Senior X. O `/health` acaba
-verificando apenas se o processo subiu.
-
-Em Senior XT, monitore `offlineDevices` e vigie o log por
-`Attempting SeniorXT reconnection`. Ver
-[Health check e monitoramento](../operacao/health-e-monitoramento.md).
+Pelos indicadores operacionais: `offlineDevices` em `/diagnostic/data` e a
+ocorrência de `Attempting SeniorXT reconnection` no log. Em Senior XT o escopo do
+`/health` é o serviço do driver, então o alerta deve incluir esses dois sinais.
+Ver [Health check e monitoramento](../operacao/health-e-monitoramento.md).
 
 ---
 
 ### Quando alguém é desligado, a face sai do equipamento?
 
-Depende da plataforma:
+Depende da plataforma. Em **Senior XT** a carga facial é incremental
+reconciliada e remove quem saiu da lista. Em **Senior X** a carga é *upsert*:
+insere e atualiza, e a remoção precisa ser feita por outro meio.
 
-- **Senior XT:** sim — a carga é incremental reconciliada e remove quem saiu.
-- **Senior X:** **não** — a carga é *upsert* e não remove.
-
-Em Senior X, o *template* facial permanece até ser removido por outro meio. Tem
-implicação de LGPD — ver [LGPD e dados biométricos](../anexos/lgpd.md).
+Considere isso ao definir o processo de desligamento — ver
+[LGPD e dados biométricos](../anexos/lgpd.md).
 
 ---
 
@@ -88,14 +82,6 @@ implicação de LGPD — ver [LGPD e dados biométricos](../anexos/lgpd.md).
 
 Não. Não há e-mail, push ou alerta ativo. O monitoramento do cliente precisa
 consultar `/health` e os indicadores de `/diagnostic/data`.
-
----
-
-### O que significa "Not implemented" no log?
-
-A Senior enviou um tipo de pendência que este driver não trata. Não é erro de
-configuração nem de rede — é funcionalidade ausente. Anote o tipo e acione o
-suporte.
 
 ---
 

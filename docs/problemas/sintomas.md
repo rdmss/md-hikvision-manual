@@ -49,7 +49,7 @@ São sentidos independentes.
 |---|---|---|
 | Equipamento inalcançável | Log: `Erro no keepalive do device {DeviceId}` | Verifique energia, rede e se o ISAPI está habilitado |
 | Credenciais erradas | Falha na configuração do dispositivo | Revise `seniorxt.ext.username` / `.password` |
-| Keepalive apertado demais para a rede | Muitos dispositivos oscilando entre online e offline | Aumente `seniorx.keepalive.device.timeout` e `.failthreshold`. Ver [Escala e tuning](../referencia/escala-e-tuning.md) |
+| Keepalive apertado demais para a rede | Muitos dispositivos oscilando entre online e offline | Aumente `seniorx.keepalive.device.timeout` e `.failthreshold`. Ver [Referência de parâmetros](../referencia/parametros.md). |
 | Frota grande com detecção lenta | Muitos offline ao mesmo tempo | Aumente `.parallelism` e reduza `.timeout` |
 
 ---
@@ -82,20 +82,6 @@ A carga é **por pessoa**: uma falha individual não interrompe as demais.
 2. Abra o log mais recente e procure por `Erro ao iniciar middleware`.
 3. `netstat -ano | findstr :5000` — a porta está livre?
 4. O `middleware.properties` existe e é legível pela conta do serviço?
-
----
-
-## "Not implemented" no log
-
-Mensagem no formato:
-
-```
-<Tipo> | Pendency: 123 - Device: 45 - Not implemented
-```
-
-A Senior enviou um tipo de pendência que **este driver não trata**. Não é
-configuração nem rede — é funcionalidade ausente. Anote o `<Tipo>`, o
-`PendencyId` e acione o suporte.
 
 ---
 

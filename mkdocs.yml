@@ -1,5 +1,4 @@
 site_name: Hikvision Driver — Manual
-site_url: https://rdmss.github.io/md-hikvision-manual/
 site_description: >-
   Manual de instalação, configuração e operação do driver de integração entre
   controladoras Hikvision e as plataformas Senior X e Senior XT.
@@ -98,11 +97,6 @@ nav:
       - Perguntas frequentes: problemas/faq.md
   - Referência:
       - Parâmetros: referencia/parametros.md
-      - Endpoints da API: referencia/api.md
-      - Escala e tuning: referencia/escala-e-tuning.md
-      - Eventos e motivos: referencia/eventos.md
   - Anexos:
       - Notas de versão: anexos/notas-de-versao.md
       - LGPD e dados biométricos: anexos/lgpd.md
-      - Suporte: anexos/suporte.md
-      - Pendências: anexos/pendencias.md

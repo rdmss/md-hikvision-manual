@@ -5,7 +5,6 @@
     verificados em ambiente real. Os nomes de campo e a navegação **não estão
     descritos aqui** — não serão deduzidos.
 
-    Pendências `PEND-03` e `IMG-XT-03` em [Pendências](../anexos/pendencias.md).
 
 ## Para que serve
 

@@ -48,11 +48,10 @@ No diretório de instalação:
 - **Restrição por origem:** `middleware.api.allowlist`.
 - **Transporte cifrado com a Senior X:** HTTPS e WebSocket seguro.
 
-!!! danger "O padrão de fábrica não protege o painel"
-    Com senha vazia — o padrão — o painel fica acessível a qualquer origem que
-    alcance a porta, expondo a configuração da integração. Numa instalação que
-    trata biometria, definir senha e restringir a allowlist não é recomendação
-    de conforto: é medida de segurança sobre dado sensível.
+!!! warning "Configure a proteção do painel"
+    Numa instalação que trata dado biométrico, definir `middleware.api.password`
+    e restringir `middleware.api.allowlist` são medidas de segurança sobre dado
+    sensível, não ajustes opcionais. Faça as duas na configuração inicial.
 
 ## Remoção de dados
 
@@ -62,14 +61,12 @@ No diretório de instalação:
 | Pessoa desligada, Senior X | Carga facial é *upsert* — **não remove** quem saiu |
 | Desinstalação do driver | O diretório inteiro é apagado, incluindo banco, filas e logs |
 
-!!! danger "Em Senior X, quem sai da lista não é removido do equipamento"
-    A carga facial no Senior X não remove os registros de quem deixou de constar
-    na lista. Em termos de LGPD, isso significa que o *template* facial de uma
-    pessoa desligada **permanece no equipamento** até que alguém o remova por
-    outro meio.
+!!! warning "Em Senior X, planeje a remoção no desligamento"
+    A carga facial no Senior X é *upsert*: ela insere e atualiza, mas a remoção
+    do *template* de quem sai da lista precisa ser feita por outro meio.
 
-    Trate isso ao definir o processo de desligamento do cliente. É diferença de
-    comportamento entre plataformas, não configuração.
+    Em termos de LGPD, isso deve estar previsto no processo de desligamento do
+    cliente. É diferença de comportamento entre plataformas.
 
 ## Campos a preencher pelo controlador
 

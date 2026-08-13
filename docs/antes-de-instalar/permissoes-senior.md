@@ -9,7 +9,6 @@ Para operar, o driver depende de um conjunto de permissões na plataforma Senior
     levaria alguém a conceder permissões erradas ou a abrir um chamado por uma
     permissão inexistente.
 
-    Pendência `PEND-03` em [Pendências](../anexos/pendencias.md).
 
 ## O que o driver precisa fazer na plataforma
 

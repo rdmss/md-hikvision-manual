@@ -35,15 +35,15 @@ diagnóstico e o webhook que os equipamentos chamam.
 | `middleware.api.password` | | *(vazio)* | Tela + arquivo | Senha do painel. **Vazio significa sem login.** Ver o aviso abaixo. |
 | `middleware.api.allowlist` | | *(vazio)* | Tela + arquivo | Lista de IPs autorizados, separados por vírgula. Vazio libera qualquer origem. |
 
-!!! warning "O padrão de fábrica não exige senha"
-    Com `middleware.api.password` vazio, qualquer pessoa com acesso de rede à
-    porta do driver abre o painel de configuração — que exibe e permite alterar
-    os parâmetros de integração. Defina uma senha e, quando possível, restrinja
-    `middleware.api.allowlist` aos IPs de gestão.
+!!! tip "Defina a senha do painel na instalação"
+    O painel só passa a exigir login depois que `middleware.api.password` é
+    preenchida. Defina-a durante a configuração inicial e, quando possível,
+    restrinja `middleware.api.allowlist` aos IPs de gestão — são as duas medidas
+    que protegem o acesso à configuração da integração.
 
-O webhook `/api/v1/isapi` e o `/health` permanecem **abertos** mesmo com senha
-configurada: o equipamento não faz login, e o health check precisa ser legível
-pelo monitoramento. Ver [Endpoints da API](api.md).
+O webhook `/api/v1/isapi` e o `/health` permanecem acessíveis mesmo com senha
+configurada, por desenho: o equipamento não faz login antes de entregar um
+evento, e o monitoramento precisa ler o health sem credencial.
 
 ---
 
@@ -91,7 +91,7 @@ Obrigatórias quando `thirdpart=seniorxt`.
 
 Nenhuma é obrigatória — todas têm default no código. Ficam **comentadas** no
 `middleware.properties.example`: descomente apenas o que precisar sobrescrever.
-Para dimensionar frotas grandes, ver [Escala e tuning](escala-e-tuning.md).
+Ajuste apenas quando o comportamento observado justificar.
 
 ### Validação de acesso
 
@@ -101,10 +101,9 @@ Para dimensionar frotas grandes, ver [Escala e tuning](escala-e-tuning.md).
 
 ### Keepalive dos dispositivos
 
-!!! note "O prefixo `seniorx.` engana aqui"
-    O serviço de keepalive é iniciado **para as duas plataformas**, fora do
-    desvio que separa Senior X de Senior XT. Apesar do nome, estas chaves valem
-    também para `thirdpart=seniorxt`.
+!!! note "Estas chaves valem para as duas plataformas"
+    Apesar do prefixo `seniorx.`, o serviço de keepalive atende também
+    instalações `thirdpart=seniorxt`.
 
 | Chave | Default | Descrição | Impacto |
 |---|---|---|---|

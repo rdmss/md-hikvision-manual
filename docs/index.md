@@ -22,7 +22,7 @@ valida cada passagem contra a Senior em tempo real, sincroniza as credenciais
 
 !!! info "Modelos homologados"
     A lista fechada de modelos e versões de firmware homologados ainda não está
-    consolidada nesta documentação. Consulte [Pendências](anexos/pendencias.md).
+    consolidada nesta documentação. Consulte o fornecedor.
 
 ---
 

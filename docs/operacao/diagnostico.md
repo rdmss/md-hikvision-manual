@@ -9,6 +9,12 @@ http://<host>:5000/diagnostic
 
 Exige as credenciais do painel (`middleware.api.user` / `middleware.api.password`).
 
+![Painel de diagnóstico, aba de dispositivos](../assets/telas/diagnostico-devices.jpg){ loading=lazy }
+
+Os cinco cartões no topo dão o resumo imediato: dispositivos online, offline,
+pendências, fila de reenvio e tamanho do banco. A lista abaixo detalha cada
+equipamento, com botão de teste individual.
+
 ## O que a tela mostra
 
 | Bloco | Conteúdo |
@@ -81,8 +87,12 @@ O painel expõe dois testes acionáveis:
 GET /diagnostic/events
 ```
 
-Aceita `deviceId` para filtrar e `limit` para o tamanho da lista (200 por
-padrão). É o caminho mais rápido para confirmar se uma passagem de teste chegou.
+A aba **Eventos** mostra as passagens recentes, com tipo (cartão ou facial),
+resultado e a mensagem devolvida:
+
+![Aba de eventos do painel](../assets/telas/diagnostico-eventos.jpg){ loading=lazy }
+
+É o caminho mais rápido para confirmar se uma passagem de teste chegou.
 
 ## Log pela web
 
@@ -90,5 +100,8 @@ padrão). É o caminho mais rápido para confirmar se uma passagem de teste cheg
 GET /diagnostic/logs
 ```
 
-Evita precisar de acesso ao disco da máquina. Para o arquivo completo, ver
-[Logs](logs.md).
+A aba **Logs** evita precisar de acesso ao disco da máquina:
+
+![Aba de logs do painel](../assets/telas/diagnostico-logs.jpg){ loading=lazy }
+
+Para o arquivo completo, ver [Logs](logs.md).

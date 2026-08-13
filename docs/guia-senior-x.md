@@ -171,6 +171,13 @@ As chaves que o driver lê dentro do conjunto:
 | `driverAddress` | **✓** | `http://<ip-do-driver>:5000` — o endereço que o equipamento vai usar |
 | `model` | | Modelo do equipamento, ex.: `DS-K1T671M` |
 
+!!! tip "Atalho: defina o endereço uma vez, para toda a frota"
+    Se todos os equipamentos apontam para o mesmo servidor, em vez de preencher
+    `driverAddress` em cada dispositivo você pode preencher a chave
+    `seniorxt.ext.server.address` na configuração do driver — ela vale como
+    alternativa global, para as duas plataformas. Ver
+    [Propriedades](propriedades.md#driveraddress).
+
 !!! danger "`driverAddress` é o que faz a integração funcionar"
     O driver usa essa propriedade para configurar o equipamento a enviar os
     eventos de acesso. **Sem ela o provisionamento falha** com

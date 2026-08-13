@@ -61,16 +61,29 @@ Independentemente do nome do conjunto, são estas as chaves que importam:
 O driver lê esse valor e o grava dentro do equipamento. A partir daí, toda vez
 que alguém passa, a catraca envia o evento para lá.
 
-!!! danger "Sem ela, o equipamento nunca é configurado"
+Formato: `http://<endereço-do-driver>:<porta>`, por exemplo
+`http://10.20.0.5:5000`.
+
+!!! tip "Você pode definir o endereço uma vez só, para toda a frota"
+    O driver procura primeiro a propriedade `driverAddress` do dispositivo. Se
+    ela estiver vazia, usa a chave `seniorxt.ext.server.address` da configuração
+    do driver.
+
+    Numa instalação em que todos os equipamentos apontam para o mesmo servidor —
+    o caso mais comum — preencher a chave global é bem mais simples do que
+    repetir o endereço em cada dispositivo. Reserve a propriedade por dispositivo
+    para as exceções.
+
+    Apesar do prefixo `seniorxt.`, **essa alternativa vale para as duas
+    plataformas**.
+
+!!! danger "Se as duas estiverem vazias, o equipamento nunca é configurado"
     O provisionamento falha com `Extensible Property driverAddress not found`, e
     o equipamento não passa a reportar passagens.
 
     É a causa daquele "instalei tudo e nada acontece" que sobrevive mesmo com o
     firewall correto: o caminho de rede está aberto, mas ninguém disse à catraca
     que ela deve usá-lo.
-
-Formato: `http://<endereço-do-driver>:<porta>`, por exemplo
-`http://10.20.0.5:5000`.
 
 Quatro regras que costumam ser violadas:
 
@@ -145,7 +158,7 @@ Fica em `middleware.properties`, no diretório de instalação, no formato
 | `seniorxt.certificate` | ✓ | `HIK.CER` | Nome do arquivo de certificado no diretório de instalação |
 | `seniorxt.ext.username` | | *(vazio)* | Usuário dos equipamentos, global |
 | `seniorxt.ext.password` | | *(vazio)* | Senha dos equipamentos, global |
-| `seniorxt.ext.server.address` | | *(vazio)* | Endereço do middleware informado ao equipamento |
+| `seniorxt.ext.server.address` | | *(vazio)* | **Endereço do driver para toda a frota.** Usado quando a propriedade `driverAddress` do dispositivo está vazia. Vale para as duas plataformas, apesar do prefixo |
 
 ### Ajuste fino
 

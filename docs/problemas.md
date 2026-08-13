@@ -30,10 +30,18 @@ Verifique nesta ordem:
 
 | # | Verificação | Como |
 |---|---|---|
-| 1 | A propriedade **`driverAddress`** está preenchida no cadastro do dispositivo? | Se faltar, o log traz `Extensible Property driverAddress not found` |
-| 2 | O endereço em `driverAddress` é o que **o equipamento** enxerga? | Não pode ser `localhost` nem IP de outra VLAN |
+| 1 | O endereço do driver está definido — na propriedade **`driverAddress`** do dispositivo **ou** na chave `seniorxt.ext.server.address`? | Se as duas faltarem, o log traz `Extensible Property driverAddress not found` |
+| 2 | Esse endereço é o que **o equipamento** enxerga? | Não pode ser `localhost` nem IP de outra VLAN |
 | 3 | O firewall libera **equipamento → driver** na porta 5000? | Teste a partir do equipamento, não do servidor |
 | 4 | O IP do servidor mudou depois da configuração? | O endereço antigo continua gravado no equipamento |
+
+!!! note "Um dispositivo sem conjunto de propriedades selecionado falha diferente"
+    Em Senior X, se o dispositivo não tiver **nenhum** conjunto de propriedades
+    extensíveis selecionado, a falha aparece como `NullReferenceException` no
+    log, e não como a mensagem de `driverAddress not found`.
+
+    Se você vir esse erro ao provisionar, comece conferindo se o campo
+    **Propriedades extensíveis** do dispositivo está preenchido.
 
 O driver enxergar o equipamento **não prova** que o equipamento enxerga o driver.
 São sentidos independentes, e só o segundo entrega eventos.
@@ -128,7 +136,7 @@ Ficam em `C:\HikvisionDriver\log\log-AAAAMMDD.txt`. Use Ctrl+F com um trecho.
 
 | Mensagem | Ação |
 |---|---|
-| `Extensible Property driverAddress not found` | Preencha `driverAddress` no cadastro do dispositivo |
+| `Extensible Property driverAddress not found` | Defina o endereço do driver: na propriedade `driverAddress` do dispositivo, ou na chave global `seniorxt.ext.server.address` |
 | `Erro ao iniciar middleware` | Leia a exceção abaixo; costuma ser configuração inválida ou porta ocupada |
 | `Thirdpart selecionado nao sera iniciado porque ha propriedades obrigatorias faltando` | Preencha os campos listados |
 | `Configuração ausente: 'seniorx.driver_key'. Cliente WS não será iniciado.` | Preencha a driver key |

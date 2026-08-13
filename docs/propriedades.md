@@ -17,15 +17,38 @@ estar nas extensíveis. Se **nada** funciona, olhe a configuração do driver.
 
 ## Propriedades extensíveis
 
-Ficam no cadastro de **cada dispositivo**, dentro da Senior, numa área de pares
-chave-valor. A plataforma não interpreta esses valores — apenas os repassa ao
-driver. É por aí que informação específica de cada fabricante chega até nós.
+São valores que a plataforma repassa ao driver sem interpretar. É por aí que
+informação específica de cada fabricante — no nosso caso, Hikvision — chega até
+nós.
 
-O driver as lê no momento em que provisiona o equipamento.
+O funcionamento envolve **duas telas**, e confundi-las é fonte de erro:
 
-| Propriedade | Obrigatória | Plataforma | O que faz |
+| Passo | Onde | O que se faz |
+|---|---|---|
+| 1 | Cadastro de propriedades extensíveis | Cria-se um **conjunto nomeado** com as chaves e valores |
+| 2 | Cadastro do dispositivo | **Seleciona-se** o conjunto na lista |
+
+Ou seja: no dispositivo você não digita chave e valor — você escolhe um conjunto
+já pronto. Se o conjunto certo não aparece na lista, ele ainda não foi criado.
+
+![Campo Propriedades extensíveis no cadastro de dispositivos](assets/telas/senior-x-dispositivo.jpg){ loading=lazy }
+
+*Campo **Propriedades extensíveis**, à direita. Os valores do ambiente estão
+borrados nesta imagem.*
+
+!!! note "Nomes de conjunto variam por instalação"
+    Os conjuntos são criados por quem implanta, então os nomes mudam de cliente
+    para cliente. Costumam seguir o equipamento — algo como `Hikvision Device`
+    para a controladora e `Hikvision Leitora` para as leitoras. Confirme quais
+    existem no ambiente antes de cadastrar o dispositivo.
+
+### As chaves que o driver lê
+
+Independentemente do nome do conjunto, são estas as chaves que importam:
+
+| Chave | Obrigatória | Plataforma | O que faz |
 |---|:--:|---|---|
-| `driverAddress` | **✓** | X e XT | Endereço do driver que será gravado no equipamento, para onde ele envia os eventos de acesso |
+| `driverAddress` | **✓** | X e XT | Endereço do driver gravado no equipamento, para onde ele envia os eventos |
 | `model` | | X e XT | Modelo do equipamento; aparece no painel de diagnóstico |
 | `username` | | XT | Usuário daquele equipamento; sobrepõe a configuração global |
 | `password` | | XT | Senha daquele equipamento; sobrepõe a configuração global |

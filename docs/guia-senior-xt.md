@@ -136,9 +136,10 @@ Você cadastra os equipamentos **na plataforma**; ela avisa o driver; o driver v
 até cada um, configura e passa a monitorá-los. Você nunca cadastra um
 equipamento dentro do driver.
 
-!!! warning "Sequência de telas pendente de captura"
-    As telas do Senior XT ainda não foram capturadas nesta documentação. Os
-    objetos e propriedades abaixo, porém, são os que o driver realmente lê.
+!!! note "Nomes de menu variam por versão da plataforma"
+    Os nomes abaixo descrevem **o que** precisa existir. O caminho exato de menu
+    pode variar conforme a versão da plataforma — procure pelo objeto, não pelo
+    caminho.
 
 ### O que precisa existir
 
@@ -159,12 +160,18 @@ equipamento dentro do driver.
 
 Esta parte costuma passar despercebida, e é a que mais trava instalação.
 
-Além dos campos normais do cadastro, cada dispositivo tem uma área de
-**propriedades extensíveis** — pares de chave e valor que a plataforma repassa ao
-driver sem interpretar. É por aí que informações específicas de cada fabricante
-chegam até nós.
+Funciona em **duas telas**: primeiro alguém cria um **conjunto nomeado** de
+propriedades, no cadastro de propriedades extensíveis; depois, no cadastro do
+dispositivo, você **seleciona esse conjunto** numa lista.
 
-Informe:
+![Campo Propriedades extensíveis no cadastro de dispositivos](assets/telas/senior-x-dispositivo.jpg){ loading=lazy }
+
+*O campo fica à direita, no bloco Gerenciador. Valores do ambiente borrados.*
+
+Se o conjunto que você precisa não aparece na lista, ele ainda não foi criado —
+volte ao cadastro de propriedades extensíveis.
+
+As chaves que o driver lê dentro do conjunto:
 
 | Propriedade | Obrigatória | Valor |
 |---|:--:|---|

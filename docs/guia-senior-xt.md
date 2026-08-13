@@ -1,10 +1,25 @@
 # Guia Senior XT
 
-Do zero até a catraca funcionando, com a Concentradora CSM. Siga na ordem.
+Do zero até a catraca funcionando, em sete etapas. Siga na ordem: cada uma
+depende da anterior.
+
+Diferente do Senior X, aqui a plataforma não está na nuvem: existe uma
+**Concentradora** rodando na rede do cliente, e é com ela que o driver conversa.
+Na prática isso muda três coisas — a integração não depende de internet, exige
+um arquivo de certificado, e é acompanhada de forma um pouco diferente.
+
+Reserve entre uma e duas horas na primeira vez.
+
+!!! tip "Duas metades que precisam se encontrar"
+    Metade do trabalho é no servidor (etapas 2 a 4) e metade é dentro da Senior
+    (etapa 5). A etapa 6 existe para provar que as duas se encontraram.
 
 ---
 
 ## Etapa 1 — Antes de começar
+
+Junte tudo antes de sentar no servidor. Faltar um item aqui costuma custar uma
+segunda visita ao cliente.
 
 ### Tenha em mãos
 
@@ -26,7 +41,12 @@ Do zero até a catraca funcionando, com a Concentradora CSM. Siga na ordem.
 | Driver | Servlet CSM | conforme a URL | Consulta de fotos |
 
 !!! danger "Confirme o sentido equipamento → driver"
-    É o que mais falha. Teste a partir do equipamento, não só do servidor.
+    Repare na primeira linha da tabela: a origem é o **equipamento**, não o
+    servidor. É a que mais falha, porque quem configura o firewall tende a
+    pensar só no sentido servidor → catraca.
+
+    Teste a partir do equipamento. Se ele tiver navegador ou console, abra
+    `http://<ip-do-driver>:5000/health` de lá. Se responder, o caminho existe.
 
 ---
 
@@ -53,6 +73,9 @@ sc query HIKVISION-DRIVER
 ---
 
 ## Etapa 3 — Colocar o certificado
+
+A comunicação com a Concentradora é autenticada por um certificado — um arquivo
+que prova ao servidor da Senior que este driver é quem diz ser.
 
 !!! danger "Faça isto antes de configurar"
     O instalador **não** empacota o `HIK.CER`. Copie o arquivo para o diretório
@@ -106,6 +129,13 @@ Clique em **Salvar**. O driver reinicia sozinho.
 
 ## Etapa 5 — Cadastrar na Senior XT
 
+Até aqui o driver está no ar, mas sozinho: ele não sabe que equipamentos
+existem. Quem conta isso a ele é a Senior.
+
+Você cadastra os equipamentos **na plataforma**; ela avisa o driver; o driver vai
+até cada um, configura e passa a monitorá-los. Você nunca cadastra um
+equipamento dentro do driver.
+
 !!! warning "Sequência de telas pendente de captura"
     As telas do Senior XT ainda não foram capturadas nesta documentação. Os
     objetos e propriedades abaixo, porém, são os que o driver realmente lê.
@@ -127,7 +157,14 @@ Clique em **Salvar**. O driver reinicia sozinho.
 
 ### Propriedades extensíveis do dispositivo
 
-Na configuração extensível de cada dispositivo:
+Esta parte costuma passar despercebida, e é a que mais trava instalação.
+
+Além dos campos normais do cadastro, cada dispositivo tem uma área de
+**propriedades extensíveis** — pares de chave e valor que a plataforma repassa ao
+driver sem interpretar. É por aí que informações específicas de cada fabricante
+chegam até nós.
+
+Informe:
 
 | Propriedade | Obrigatória | Valor |
 |---|:--:|---|
@@ -153,8 +190,13 @@ Na configuração extensível de cada dispositivo:
 
 ## Etapa 6 — Validar
 
-Em Senior XT, a evidência principal está no **log** e na **lista de
-dispositivos**.
+Sete verificações, em ordem crescente de profundidade. As quatro primeiras
+confirmam que cada peça está de pé; **só a quinta prova que elas se falam**.
+
+Uma diferença em relação ao Senior X: aqui a evidência de que a integração
+estabeleceu está no **log** e na **lista de dispositivos**, não num indicador
+único. Vale conhecer as duas mensagens do passo 2 — são elas que dizem se a
+Concentradora aceitou o driver.
 
 **1. O serviço está no ar**
 
@@ -204,8 +246,12 @@ aparece na aba **Eventos**:
 - [ ] Desligamento de teste **remove** a face do equipamento
 
 !!! success "Em Senior XT a remoção é automática"
-    A carga facial aqui é incremental reconciliada: quem sai da lista é removido
-    do equipamento. Difere do Senior X, onde a remoção precisa de outro meio.
+    A carga facial aqui **compara a lista atual com a anterior** e ajusta os dois
+    lados: quem entrou é gravado, quem saiu é apagado do equipamento.
+
+    É diferente do Senior X, onde a remoção precisa ser feita por outro meio.
+    Como rosto é dado biométrico — dado pessoal sensível para a LGPD — essa
+    diferença importa no processo de desligamento.
 
 **7. A negativa funciona**
 
@@ -215,7 +261,14 @@ Passe alguém sem permissão e confirme que nega.
 
 ## Etapa 7 — Deixar operando
 
+Instalado e validado, falta combinar como o cliente vai perceber um problema
+antes que alguém fique preso na catraca.
+
 ### Monitoramento
+
+Um ponto importante: **o driver não avisa ninguém**. Não há envio de e-mail nem
+push quando algo cai. Ele responde quando perguntado — então o monitoramento do
+cliente precisa perguntar de tempos em tempos.
 
 | O que | Onde | Alertar quando |
 |---|---|---|

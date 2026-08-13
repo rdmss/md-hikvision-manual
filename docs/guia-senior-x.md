@@ -1,11 +1,24 @@
 # Guia Senior X
 
-Do zero até a catraca funcionando. Siga na ordem — cada etapa depende da
-anterior.
+Do zero até a catraca funcionando, em seis etapas. Siga na ordem: cada uma
+depende da anterior.
+
+O caminho é sempre o mesmo — você **instala** o driver no servidor, **aponta**
+ele para a Senior, **cadastra** os equipamentos na Senior, e por fim
+**testa uma passagem de verdade**. Reserve algo entre uma e duas horas na
+primeira vez.
+
+!!! tip "Duas metades que precisam se encontrar"
+    Metade do trabalho é no servidor (etapas 2 e 3) e metade é dentro da Senior
+    (etapa 4). A integração só funciona quando as duas se encontram — por isso
+    a etapa 5 existe: ela prova que o encontro aconteceu.
 
 ---
 
 ## Etapa 1 — Antes de começar
+
+Junte tudo antes de sentar no servidor. Faltar um item aqui costuma custar uma
+segunda visita ao cliente.
 
 ### Tenha em mãos
 
@@ -25,14 +38,21 @@ anterior.
 | Driver | `sam-api.senior.com.br` | 443 | API REST e WebSocket |
 
 !!! danger "Confirme o sentido equipamento → driver"
-    É o que mais falha. Teste do equipamento, não só do servidor. Se o
-    equipamento tiver navegador, abra `http://<ip-do-driver>:5000/health` a
-    partir dele.
+    Repare na primeira linha da tabela: a origem é o **equipamento**, não o
+    servidor. É a que mais falha, porque quem configura o firewall tende a
+    pensar só no sentido servidor → catraca.
 
-!!! note "Proxy que corta WebSocket"
-    O canal de pendências usa `wss://`. Proxies que inspecionam HTTP às vezes
-    derrubam o *upgrade*. O sintoma é a API funcionar e as pendências nunca
-    chegarem.
+    Teste a partir do equipamento. Se ele tiver navegador ou console, abra
+    `http://<ip-do-driver>:5000/health` de lá. Se responder, o caminho existe.
+
+!!! note "Atenção a proxy corporativo"
+    A Senior X envia trabalho ao driver — cargas de cartão, comandos — por um
+    canal permanente chamado WebSocket (`wss://`). Alguns proxies corporativos
+    que inspecionam tráfego HTTP derrubam esse tipo de conexão.
+
+    O sintoma é característico: a comunicação comum funciona, mas as cargas
+    nunca chegam. Se o cliente tem proxy, confirme com a equipe de rede que
+    WebSocket passa.
 
 ---
 
@@ -106,8 +126,13 @@ O driver reinicia sozinho.
 
 ## Etapa 4 — Cadastrar na Senior X
 
-É aqui que a integração se completa. O driver já está no ar, mas ainda não
-conhece nenhum equipamento.
+Até aqui o driver está no ar, mas sozinho: ele não sabe que equipamentos
+existem. Quem conta isso a ele é a Senior.
+
+O raciocínio é o seguinte. Você cadastra os equipamentos **na Senior**; a Senior
+avisa o driver quais são; o driver então vai até cada um deles, configura, e
+passa a monitorá-los. Você nunca cadastra um equipamento dentro do driver — ele
+sempre recebe essa informação da plataforma.
 
 !!! warning "Sequência de telas pendente de captura"
     As telas do Senior X ainda não foram capturadas nesta documentação. Os
@@ -126,7 +151,14 @@ conhece nenhum equipamento.
 
 ### Propriedades extensíveis do dispositivo
 
-No cadastro de cada dispositivo, na configuração extensível, informe:
+Esta parte costuma passar despercebida, e é a que mais trava instalação.
+
+Além dos campos normais do cadastro, cada dispositivo tem uma área de
+**propriedades extensíveis** — pares de chave e valor que a Senior repassa ao
+driver sem interpretar. É por aí que informações específicas de cada fabricante
+chegam até nós.
+
+Informe:
 
 | Propriedade | Obrigatória | Valor |
 |---|:--:|---|
@@ -149,20 +181,34 @@ No cadastro de cada dispositivo, na configuração extensível, informe:
 
 ### Fotos e reconhecimento facial
 
-Para carga facial, habilite o uso de fotos na plataforma e garanta que as
-pessoas tenham foto cadastrada.
+Para o equipamento reconhecer rostos, a Senior precisa enviar as fotos das
+pessoas ao driver, que as grava em cada dispositivo. Habilite o uso de fotos na
+plataforma e confirme que as pessoas têm foto cadastrada.
+
+A carga acontece pessoa a pessoa: se a foto de alguém for recusada, as demais
+seguem normalmente e o log registra qual falhou e por quê.
 
 !!! warning "Em Senior X, planeje a remoção no desligamento"
-    A carga facial no Senior X é *upsert*: insere e atualiza, e a remoção do
-    *template* de quem sai da lista precisa ser feita por outro meio. Preveja
-    isso no processo de desligamento — é exigência de LGPD sobre dado
-    biométrico.
+    A carga facial no Senior X **acrescenta e atualiza, mas não apaga**. Quando
+    uma pessoa deixa a lista, o rosto dela continua gravado no equipamento até
+    que alguém o remova por outro meio.
+
+    Isso importa por dois motivos. O prático: um ex-funcionário pode continuar
+    passando. E o legal: rosto é dado biométrico, que a LGPD trata como dado
+    pessoal sensível — mantê-lo sem necessidade é irregularidade.
+
+    Defina com o cliente, já na implantação, como a remoção será feita no
+    desligamento.
 
 ---
 
 ## Etapa 5 — Validar
 
-Na ordem. Só o passo 5 prova a integração inteira.
+Seis verificações, em ordem crescente de profundidade. As quatro primeiras
+confirmam que cada peça está de pé; **só a quinta prova que elas se falam**.
+
+Não pule para o fim: quando algo falha, saber em qual verificação parou já
+indica onde está o problema.
 
 **1. O serviço está no ar**
 
@@ -212,9 +258,16 @@ todo mundo não está validando.
 
 ## Etapa 6 — Deixar operando
 
+Instalado e validado, falta combinar como o cliente vai perceber um problema
+antes que alguém fique preso na catraca.
+
 ### Monitoramento
 
-O driver **não emite alerta** — o monitoramento do cliente precisa consultar.
+Um ponto importante: **o driver não avisa ninguém**. Não há envio de e-mail nem
+push quando algo cai. Ele responde quando perguntado — então o monitoramento do
+cliente (Zabbix, PRTG, o que já usarem) precisa perguntar de tempos em tempos.
+
+Sem isso, uma queda passa despercebida até alguém reclamar.
 
 | O que | Onde | Alertar quando |
 |---|---|---|
@@ -241,8 +294,17 @@ Segredos são mascarados automaticamente.
 
 ### Eventos represados
 
-Eventos que a Senior não aceitou vão para `events\deadletter\` e **exigem ação
-manual**. Diagnostique a causa, corrija, e devolva à fila:
+Quando o driver não consegue entregar um evento à Senior, ele guarda em vez de
+descartar e tenta de novo a cada 30 segundos. Isso resolve sozinho quedas
+temporárias.
+
+Se um evento for recusado de forma definitiva — ou se passar de 24 h tentando —
+ele vai para uma pasta à parte, chamada `deadletter`. **Nada acontece com esses
+arquivos até alguém agir.** Por isso o indicador `deadLetterSize` merece alerta:
+qualquer valor acima de zero significa registro de acesso que não chegou à
+Senior.
+
+Depois de diagnosticar e corrigir a causa, devolva os arquivos à fila:
 
 ```bat
 move C:\HikvisionDriver\events\deadletter\*.json C:\HikvisionDriver\events\

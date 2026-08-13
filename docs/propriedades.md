@@ -1,19 +1,27 @@
 # Propriedades
 
 Duas coisas diferentes se chamam "propriedade" nesta integração, e confundi-las
-é fonte comum de erro:
+é fonte comum de erro.
 
-| Onde vive | O que é | Vale para |
-|---|---|---|
-| **`middleware.properties`**, no servidor | Configuração do driver | A instalação inteira |
-| **Propriedades extensíveis**, no cadastro da Senior | Configuração de cada equipamento | Um dispositivo |
+Pense assim: uma configura **o driver**, a outra configura **cada equipamento**.
+
+| | Onde fica | Quem edita | Vale para |
+|---|---|---|---|
+| **Configuração do driver** | Arquivo `middleware.properties`, no servidor | Você, pela tela `/config` | A instalação inteira |
+| **Propriedades extensíveis** | Cadastro do dispositivo, dentro da Senior | Você, na plataforma | Um equipamento só |
+
+Se um único equipamento se comporta diferente dos outros, o problema tende a
+estar nas extensíveis. Se **nada** funciona, olhe a configuração do driver.
 
 ---
 
 ## Propriedades extensíveis
 
-Ficam na configuração extensível de **cada dispositivo**, no cadastro da Senior.
-O driver as lê ao provisionar o equipamento.
+Ficam no cadastro de **cada dispositivo**, dentro da Senior, numa área de pares
+chave-valor. A plataforma não interpreta esses valores — apenas os repassa ao
+driver. É por aí que informação específica de cada fabricante chega até nós.
+
+O driver as lê no momento em que provisiona o equipamento.
 
 | Propriedade | Obrigatória | Plataforma | O que faz |
 |---|:--:|---|---|
@@ -24,29 +32,50 @@ O driver as lê ao provisionar o equipamento.
 
 ### `driverAddress`
 
+É a propriedade mais importante das quatro. Ela responde a uma pergunta simples:
+**para qual endereço a catraca deve mandar os eventos?**
+
+O driver lê esse valor e o grava dentro do equipamento. A partir daí, toda vez
+que alguém passa, a catraca envia o evento para lá.
+
 !!! danger "Sem ela, o equipamento nunca é configurado"
-    O provisionamento falha com `Extensible Property driverAddress not found` e
-    o equipamento não passa a reportar passagens. É a causa de "instalei tudo e
-    nada acontece" que sobrevive mesmo com o firewall correto.
+    O provisionamento falha com `Extensible Property driverAddress not found`, e
+    o equipamento não passa a reportar passagens.
+
+    É a causa daquele "instalei tudo e nada acontece" que sobrevive mesmo com o
+    firewall correto: o caminho de rede está aberto, mas ninguém disse à catraca
+    que ela deve usá-lo.
 
 Formato: `http://<endereço-do-driver>:<porta>`, por exemplo
 `http://10.20.0.5:5000`.
 
-Regras que costumam ser violadas:
+Quatro regras que costumam ser violadas:
 
-- Use o endereço que **o equipamento** enxerga, não o que você enxerga. Nunca
-  `localhost`.
-- Se driver e equipamento estão em redes diferentes, use o endereço roteável
-  entre elas.
-- A porta tem de bater com `middleware.api.port`.
-- O IP precisa ser fixo: ele fica gravado no equipamento, e se mudar os eventos
-  param de chegar.
+1. **Use o endereço que o equipamento enxerga**, não o que você enxerga do seu
+   computador. Nunca `localhost` — para a catraca, `localhost` é ela mesma.
+2. **Se driver e equipamento estão em redes diferentes**, use o endereço
+   roteável entre elas, não o IP interno de outra VLAN.
+3. **A porta tem de bater** com `middleware.api.port` (5000 por padrão).
+4. **O IP precisa ser fixo.** O valor fica gravado dentro do equipamento; se o
+   servidor mudar de IP, as catracas continuam mandando para o endereço antigo e
+   os eventos simplesmente param de chegar.
+
+### `model`
+
+Identifica o modelo do equipamento e aparece na coluna correspondente do painel
+de diagnóstico. Não é obrigatória, mas facilita o suporte: sem ela, a coluna
+fica vazia e fica difícil saber com que equipamento se está lidando.
 
 ### `username` e `password`
 
-Em Senior XT, quando presentes, valem para aquele dispositivo. Ausentes, o driver
-usa `seniorxt.ext.username` e `seniorxt.ext.password` da configuração global.
-Útil quando a frota tem credenciais diferentes.
+Só em Senior XT. Servem para equipamentos que exigem login.
+
+Funcionam em cascata: **se estiverem preenchidas no dispositivo, valem para
+ele**; se não, o driver usa `seniorxt.ext.username` e `seniorxt.ext.password` da
+configuração geral.
+
+Na prática, preencha a configuração geral com a credencial que a maioria usa, e
+só informe aqui os equipamentos que fogem à regra.
 
 ---
 
@@ -97,9 +126,14 @@ Fica em `middleware.properties`, no diretório de instalação, no formato
 
 ### Ajuste fino
 
-Nenhuma é obrigatória. Ficam comentadas no `middleware.properties.example` —
-descomente só o que precisar sobrescrever. Ajuste apenas quando o comportamento
-observado justificar.
+Nenhuma é obrigatória e todas já têm um valor padrão adequado à maioria das
+instalações. Ficam comentadas no arquivo `middleware.properties.example` —
+descomente só a que precisar mudar.
+
+!!! tip "Não ajuste preventivamente"
+    Mexer nesses valores sem um sintoma concreto costuma criar problema em vez de
+    evitar. Só altere quando o comportamento observado justificar — por exemplo,
+    equipamentos oscilando entre online e offline numa rede lenta.
 
 | Chave | Default | O que faz |
 |---|---|---|

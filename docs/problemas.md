@@ -1,13 +1,30 @@
 # Problemas
 
-Encontre o sintoma, siga a ação.
+Encontre o sintoma na lista, siga a ação.
+
+!!! tip "Um teste que economiza muito tempo"
+    Antes de investigar qualquer coisa, faça uma passagem de teste numa catraca e
+    veja se ela aparece na aba **Eventos** do painel de diagnóstico.
+
+    - **Apareceu?** A rede está certa. O problema é de dados: permissão,
+      credencial ou cadastro na Senior.
+    - **Não apareceu?** O evento não está chegando. O problema é de rede ou da
+      propriedade `driverAddress` — e mexer em cadastro não vai resolver.
+
+    Esse único teste separa dois mundos e evita a maior parte das investigações
+    em direção errada.
 
 ---
 
 ## Instalei tudo e nenhuma passagem é validada
 
-O sintoma mais comum e o mais enganoso: os dispositivos aparecem **online**, a
-carga de cartões conclui, e mesmo assim nada é validado.
+O sintoma mais comum e o mais enganoso. Os dispositivos aparecem **online**, a
+carga de cartões conclui, o painel fica todo verde — e nenhuma passagem é
+validada.
+
+A explicação quase sempre é a mesma: o driver consegue falar com a catraca, mas
+a catraca não consegue falar com o driver. São caminhos independentes, e só o
+segundo entrega eventos. O painel verde reflete apenas o primeiro.
 
 Verifique nesta ordem:
 
@@ -78,8 +95,13 @@ A carga é por pessoa: uma falha individual não interrompe as demais.
 
 ### Reprocessar dead-letter
 
-Diagnostique **antes** de reenviar: se a causa for rejeição permanente,
-devolver o arquivo à fila só produz outra falha.
+A pasta `deadletter` guarda eventos que o driver desistiu de entregar — porque a
+Senior recusou de forma definitiva, ou porque passaram do prazo de tentativas.
+**Eles ficam lá para sempre até alguém agir.**
+
+Diagnostique **antes** de reenviar. Se a Senior recusou por um cadastro que
+falta, devolver o arquivo à fila só produz outra recusa. Descubra o motivo no
+log, corrija a causa, e só então reenvie.
 
 ```bat
 move C:\HikvisionDriver\events\deadletter\*.json C:\HikvisionDriver\events\

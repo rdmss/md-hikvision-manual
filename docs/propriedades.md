@@ -17,39 +17,75 @@ estar nas extensíveis. Se **nada** funciona, olhe a configuração do driver.
 
 ## Propriedades extensíveis
 
-São valores que a plataforma repassa ao driver sem interpretar. É por aí que
-informação específica de cada fabricante — no nosso caso, Hikvision — chega até
-nós.
+São valores que a plataforma repassa ao driver sem interpretar. É por aí que o
+driver descobre **para onde o equipamento deve mandar os eventos**.
 
 O funcionamento envolve **duas telas**, e confundi-las é fonte de erro:
 
-| Passo | Onde | O que se faz |
+| Passo | Tela | O que se faz |
 |---|---|---|
-| 1 | Cadastro de propriedades extensíveis | Cria-se um **conjunto nomeado** com as chaves e valores |
-| 2 | Cadastro do dispositivo | **Seleciona-se** o conjunto na lista |
+| 1 | **Grupo de propriedades extensíveis** | Cria-se um grupo com as chaves e valores |
+| 2 | **Cadastro de dispositivos** | Seleciona-se o grupo na lista |
 
-Ou seja: no dispositivo você não digita chave e valor — você escolhe um conjunto
-já pronto. Se o conjunto certo não aparece na lista, ele ainda não foi criado.
+No dispositivo você **não digita** chave e valor — escolhe um grupo já pronto. Se
+o grupo que você precisa não aparece na lista, ele ainda não foi criado.
+
+### Passo 1 — Criar o grupo
+
+Em **Gestão de Acesso e Segurança → Grupo de propriedades extensíveis**, clique
+em **Adicionar**, dê um nome ao grupo e cadastre as propriedades.
+
+Para este driver, o grupo precisa de apenas duas:
+
+![Grupo de propriedades extensíveis do driver](assets/telas/senior-x-grupo-isapi.jpg){ loading=lazy }
+
+*Grupo nomeado `ISAPI`, com as duas propriedades que o driver lê. O endereço está
+borrado nesta imagem.*
+
+| Identificador | Obrigatório | Valor |
+|---|:--:|---|
+| `driverAddress` | **✓** | `http://<ip-do-driver>:5000` |
+| `model` | | Identificação livre do equipamento |
+
+!!! danger "Não reaproveite grupos de outras integrações"
+    Ambientes que já usam outros equipamentos costumam ter grupos com nomes
+    parecidos — `Hikvision Device`, `Hikvision Leitora`, `MD400`, `Intelbras`.
+    **Eles não servem para este driver.**
+
+    Um grupo de outra integração tem chaves completamente diferentes:
+
+    ![Grupo de outra integração, com chaves que este driver não usa](assets/telas/senior-x-grupo-outro.jpg){ loading=lazy }
+
+    `ipAddress`, `portNo`, `uri`, `protocolType`… Este driver **não lê nenhuma
+    delas**. Ele monta a configuração de notificação por conta própria e só
+    precisa do `driverAddress`.
+
+    Selecionar um grupo desses no dispositivo faz a integração falhar exatamente
+    como se nada tivesse sido configurado. **Na dúvida, crie um grupo novo.**
+
+!!! note "Por que só duas propriedades bastam"
+    O driver preenche sozinho o resto da configuração de notificação do
+    equipamento: o caminho `/api/v1/isapi`, o protocolo HTTP, o formato JSON e a
+    ausência de autenticação são fixos no código. Do `driverAddress` ele extrai
+    apenas o endereço e a porta.
+
+    Por isso não adianta cadastrar `uri`, `protocolType` ou `portNo` — seriam
+    ignorados.
+
+### Passo 2 — Selecionar o grupo no dispositivo
+
+No cadastro do dispositivo, campo **Propriedades extensíveis**:
 
 ![Campo Propriedades extensíveis no cadastro de dispositivos](assets/telas/senior-x-dispositivo.jpg){ loading=lazy }
 
-*Campo **Propriedades extensíveis**, à direita. Os valores do ambiente estão
-borrados nesta imagem.*
-
-!!! note "Nomes de conjunto variam por instalação"
-    Os conjuntos são criados por quem implanta, então os nomes mudam de cliente
-    para cliente. Costumam seguir o equipamento — algo como `Hikvision Device`
-    para a controladora e `Hikvision Leitora` para as leitoras. Confirme quais
-    existem no ambiente antes de cadastrar o dispositivo.
+*Valores do ambiente borrados nesta imagem.*
 
 ### As chaves que o driver lê
-
-Independentemente do nome do conjunto, são estas as chaves que importam:
 
 | Chave | Obrigatória | Plataforma | O que faz |
 |---|:--:|---|---|
 | `driverAddress` | **✓** | X e XT | Endereço do driver gravado no equipamento, para onde ele envia os eventos |
-| `model` | | X e XT | Modelo do equipamento; aparece no painel de diagnóstico |
+| `model` | | X e XT | Identificação do equipamento; aparece no painel de diagnóstico |
 | `username` | | XT | Usuário daquele equipamento; sobrepõe a configuração global |
 | `password` | | XT | Senha daquele equipamento; sobrepõe a configuração global |
 

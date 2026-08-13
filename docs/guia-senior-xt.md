@@ -160,18 +160,31 @@ equipamento dentro do driver.
 
 Esta parte costuma passar despercebida, e é a que mais trava instalação.
 
-Funciona em **duas telas**: primeiro alguém cria um **conjunto nomeado** de
-propriedades, no cadastro de propriedades extensíveis; depois, no cadastro do
-dispositivo, você **seleciona esse conjunto** numa lista.
+Funciona em **duas telas**:
+
+1. Em **Gestão de Acesso e Segurança → Grupo de propriedades extensíveis**, crie
+   um grupo com as chaves abaixo.
+2. No cadastro do dispositivo, **selecione esse grupo** no campo
+   *Propriedades extensíveis*.
+
+![Grupo de propriedades extensíveis do driver](assets/telas/senior-x-grupo-isapi.jpg){ loading=lazy }
+
+*O grupo precisa de apenas duas propriedades. Endereço borrado nesta imagem.*
 
 ![Campo Propriedades extensíveis no cadastro de dispositivos](assets/telas/senior-x-dispositivo.jpg){ loading=lazy }
 
 *O campo fica à direita, no bloco Gerenciador. Valores do ambiente borrados.*
 
-Se o conjunto que você precisa não aparece na lista, ele ainda não foi criado —
-volte ao cadastro de propriedades extensíveis.
+!!! danger "Não reaproveite grupos de outras integrações"
+    Ambientes com outros equipamentos costumam ter grupos de nome parecido —
+    `Hikvision Device`, `Hikvision Leitora`, `Intelbras`. Eles usam chaves
+    diferentes (`ipAddress`, `portNo`, `uri`) que **este driver não lê**.
 
-As chaves que o driver lê dentro do conjunto:
+    Selecionar um deles faz a integração falhar como se nada tivesse sido
+    configurado. Na dúvida, crie um grupo novo. Ver
+    [Propriedades](propriedades.md#passo-1-criar-o-grupo).
+
+As chaves que o driver lê dentro do grupo:
 
 | Propriedade | Obrigatória | Valor |
 |---|:--:|---|
